@@ -1,4 +1,3 @@
-// View management
 function initializeViewManagement() {
     const buttons = document.querySelectorAll('.nav-button');
     buttons.forEach(button => {
@@ -19,7 +18,6 @@ function initializeViewManagement() {
                 fetchSafetyMetrics();
                 fetchTripDetails();
             } else if (viewName === 'routes') {
-                // We'll implement this later
                 console.log('Routes view selected - to be implemented');
             }
         });
@@ -131,7 +129,6 @@ function renderPagination(total, page) {
     }
 
     if (totalPages > maxVisible) {
-        // Add "..."
         const dots = document.createElement('span');
         dots.textContent = '...';
         dots.style.padding = '0 8px';

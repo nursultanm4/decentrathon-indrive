@@ -123,8 +123,6 @@ tr:hover {
 }
 
 
-/* ...existing code... */
-
 .chart-container {
     /* Ensure chart containers don't overflow horizontally */
     overflow-x: hidden;
@@ -144,7 +142,7 @@ tr:hover {
 
 #trip-metrics tbody {
     display: block;
-    max-height: 1000px; /* Set max height for vertical scroll */
+    max-height: 1000px; 
     overflow-y: auto;
     overflow-x: hidden;
 }
