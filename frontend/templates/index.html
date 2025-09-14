@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dct4 inDrive</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="nav-buttons">
+            <button class="nav-button active" data-view="safety">Safety Scenarios</button>
+            <button class="nav-button" data-view="routes">Popular Routes</button>
+        </div>
+        
+        <div id="safety-view" class="dashboard-view">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <h3>Total Trips</h3>
+                    <p id="total-trips">Loading...</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Avg Speed (km/h)</h3>
+                    <p id="avg-speed">Loading...</p>
+                </div>
+                <div class="metric-card">
+                    <h3>High Speed Points (%)</h3>
+                    <p id="high-speed-points">Loading...</p>
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3>Per-Trip Metrics</h3>
+                    <table id="trip-metrics">
+                        <thead>
+                            <tr>
+                                <th>Trip ID</th>
+                                <th>Avg Speed (km/h)</th>
+                                <th>Max Speed (km/h)</th>
+                                <th>Avg Azimuth Change (°)</th>
+                                <th>Sharp Turns</th>
+                                <th>Distance (km)</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div class="chart-container">
+                        <h3>Trip Safety Events Overview</h3>
+                        <canvas id="safety-events-chart"></canvas>
+                    </div>
+                    <div id="pagination" class="pagination"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="routes-view" class="dashboard-view hidden">
+            <!-- This section will be populated when we implement the routes view -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <h3>Popular Areas</h3>
+                    <p id="popular-areas">-</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Busiest Hours</h3>
+                    <p id="busy-hours">-</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Total Distance</h3>
+                    <p id="total-distance">-</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Unusual Routes</h3>
+                    <p id="unusual-routes">Loading...</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Sharp Declines</h3>
+                    <p id="sharp-declines">Loading...</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Popular Route Pairs</h3>
+                    <p id="popular-pairs">-</p>
+                </div>
+            </div>
+            <div class="charts-grid">
+                <canvas id="routes-chart"></canvas>
+                <div class="chart-container">
+                    <h3>Speed Distribution</h3>
+                    <canvas id="speed-chart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Trip Length Distribution</h3>
+                    <canvas id="length-chart"></canvas>
+                </div>
+            </div>
+            <div class="explanation-section">
+                <h3>Dashboard Insights</h3>
+                <div class="explanation-card">
+                    <strong>Unusual Routes:</strong>
+                    <p id="explain-unusual">Trips with large azimuth changes or sharp speed drops may indicate risky or non-standard driving behavior.</p>
+                </div>
+                <div class="explanation-card">
+                    <strong>Sharp Declines:</strong>
+                    <p id="explain-declines">Sharp speed declines can signal sudden braking or unexpected stops, which may be safety concerns.</p>
+                </div>
+                <div class="explanation-card">
+                    <strong>Sharp Turns:</strong>
+                    <p id="explain-turns">Frequent sharp turns could mean aggressive driving or complex routes, affecting passenger comfort and safety.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>
