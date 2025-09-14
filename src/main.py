@@ -96,5 +96,14 @@ def get_popular_routes():
     })
 
 
+@app.route('/api/heatmap-data')
+def get_heatmap_data():
+    # Load only the first chunk for demo purposes
+    first_chunk = next(load_data_in_chunks(DATA_FILE, CHUNK_SIZE))
+    # Use only lat/lng for heatmap
+    points = first_chunk[['lat', 'lng']].values.tolist()
+    return jsonify({'points': points})
+
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dct4 inDrive</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -12,6 +15,7 @@
         <div class="nav-buttons">
             <button class="nav-button active" data-view="safety">Safety Scenarios</button>
             <button class="nav-button" data-view="routes">Popular Routes</button>
+            <button class="nav-button" data-view="heatmap">Heatmap</button>
         </div>
         
         <div id="safety-view" class="dashboard-view">
@@ -54,6 +58,23 @@
                 </div>
             </div>
         </div>
+
+
+        <div id="heatmap-view" class="dashboard-view hidden">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <h3>Demand Heatmap</h3>
+                    <p>Visualizes trip density across the city.</p>
+                </div>
+            </div>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3>Heatmap of Demand</h3>
+                    <div id="map" style="height: 500px; width: 100%; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"></div>
+                </div>
+            </div>
+        </div>
+
 
         <div id="routes-view" class="dashboard-view hidden">
             <div class="metrics-grid">

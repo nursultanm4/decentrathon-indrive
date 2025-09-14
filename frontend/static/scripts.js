@@ -2,23 +2,21 @@ function initializeViewManagement() {
     const buttons = document.querySelectorAll('.nav-button');
     buttons.forEach(button => {
         button.addEventListener('click', () => {
-            // Update button states
             buttons.forEach(b => b.classList.remove('active'));
             button.classList.add('active');
-            
-            // Show corresponding view
             const viewName = button.dataset.view;
             document.querySelectorAll('.dashboard-view').forEach(view => {
                 view.classList.add('hidden');
             });
             document.getElementById(`${viewName}-view`).classList.remove('hidden');
-            
-            // Load data for the view
             if (viewName === 'safety') {
                 fetchSafetyMetrics();
-                fetchTripDetails();
+                currentPage = 1;
+                fetchTripDetails(currentPage);
             } else if (viewName === 'routes') {
-                console.log('Routes view selected - to be implemented');
+                fetchPopularRoutes();
+            } else if (viewName === 'heatmap') {
+                fetchHeatmapData();
             }
         });
     });
@@ -217,6 +215,37 @@ async function fetchPopularRoutes() {
     }
 }
 
+
+async function fetchHeatmapData() {
+    try {
+        const response = await fetch('/api/heatmap-data');
+        const data = await response.json();
+        renderHeatmap(data.points);
+    } catch (error) {
+        console.error('Error fetching heatmap data:', error);
+    }
+}
+
+function renderHeatmap(points) {
+    // Remove previous map if exists
+    if (window.heatmapMap) {
+        window.heatmapMap.remove();
+    }
+    // Make sure the map container is visible
+    setTimeout(() => {
+        window.heatmapMap = L.map('map').setView([51.1694, 71.4491], 12);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(window.heatmapMap);
+
+        // Prepare heatmap points: [lat, lng, intensity]
+        const heatPoints = points.map(pt => [pt[0], pt[1], 0.5]);
+        L.heatLayer(heatPoints, {radius: 25, blur: 15, maxZoom: 17}).addTo(window.heatmapMap);
+
+        // Fix for map not rendering when hidden
+        window.heatmapMap.invalidateSize();
+    }, 100);
+}
 
 // Initialize everything when the page loads
 document.addEventListener('DOMContentLoaded', () => {
